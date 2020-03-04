@@ -7,7 +7,7 @@ class HelloController < ApplicationController
     request = AlexaRubykit::build_request(params)
     $message = request.slots[:message][:value]
     response = AlexaRubykit::Response.new
-    response.add_speech("#{request.slots[:message][:value]}")
+    response.add_speech($message)
     # render ('hello/show')
     render json: response.build_response
   end
