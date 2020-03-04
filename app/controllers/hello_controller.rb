@@ -2,16 +2,17 @@ class HelloController < ApplicationController
   skip_before_action :verify_authenticity_token
   protect_from_forgery with: :null_session
 
-  $message = String.new
   def index
     request = AlexaRubykit::build_request(params)
-    $message = request.slots[:message][:value]
+    message = Message.new(message:request.slots[:message][:value])
+    message.save
     response = AlexaRubykit::Response.new
-    response.add_speech($message)
+    response.add_speech(message)
     # render ('hello/show')
     render json: response.build_response
   end
 
   def show
+    @message = Message.find(Message.all.length).message
   end
 end
