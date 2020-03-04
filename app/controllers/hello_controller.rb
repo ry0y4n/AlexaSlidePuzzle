@@ -13,6 +13,9 @@ class HelloController < ApplicationController
   end
 
   def show
-    @message = Message.find(Message.all.length).message
+    @message = "アレクサに話しかけてください。"
+    if Message.all.length != 0 #データベースがからの時の例外処理
+      @message = Message.find(Message.all.length).message
+    end
   end
 end
