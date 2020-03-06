@@ -13,6 +13,7 @@
     <h1>矢印キーを押してみて</h1>
     <canvas id="myCanvas" width="330" height="330"></canvas>
     <script>
+
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
 
@@ -25,7 +26,6 @@
         var numbers = [];
         var numberColor = "#000000";
         var numberClearColor = "#ff0000";
-        var opeNum = <%= @opeNum %>
 
         document.addEventListener("click", clickHandler, false);
 
@@ -363,6 +363,6 @@
 
         make()
         draw()
-    </script>
+        </script>
   </body>
 </html>
