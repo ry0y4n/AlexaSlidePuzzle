@@ -10,10 +10,6 @@
     <%= stylesheet_link_tag "puzzle", :media => "all" %>
   </head>
   <body>
-<<<<<<< Updated upstream
-    <!-- <h1>リロードした1秒後に「<%= @operation %>」へ移動する</h1> -->
-    <!-- <h1>矢印キーを押してみて</h1> -->
-=======
     <div class="container">
         <div class="glitch" data-text="Slidepuzzle">Slidepuzzle</div>
         <div class="glow">Slidepuzzle</div>
@@ -26,10 +22,8 @@
         <li>指定した方向に空白が移動します</li>
         <li>バラバラになった画像を元通りに<br>並び替えることができればゲームクリアです！</li>
     </div> -->
->>>>>>> Stashed changes
-    <canvas id="myCanvas" width="330" height="330"></canvas>
+    <canvas id="myCanvas" width="550" height="550"></canvas>
     <script>
-
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
 
@@ -42,6 +36,9 @@
         var numbers = [];
         var numberColor = "#000000";
         var numberClearColor = "#ff0000";
+        var tempImg = new Image();
+        var x = 0;
+        var y = 0;
 
         document.addEventListener("click", clickHandler, false);
 
@@ -66,6 +63,12 @@
         }
         */
 
+        function init(){
+            tempImg.src = "./nature.jpg";
+            tempImg.width = 550;
+            tempImg.height = 550;
+        }
+
         function makeNumber() {
             for (i = 0; i < size**2; i++) {
                 numbers.push(i);
@@ -83,7 +86,7 @@
             for (var c = 0; c < size; c++) {
                 blocks[c] = [];
                 for (var r = 0; r < size; r++) {
-                blocks[c][r] = { x: 0, y:0, num: 0};
+                    blocks[c][r] = { x: 0, y:0, num: 0};
                 }
             }
         }
@@ -108,7 +111,13 @@
                     } else {
                         ctx.fillStyle = blockColor;
                         ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                        y = Math.round((blocks[c][r].num-1) / (size));
+                        x = (blocks[c][r].num-1) % (size);
+                        if((blocks[c][r].num-1)%size == (size-1)){
+                            y -= 1;
+                        }
                         ctx.fill();
+                        ctx.drawImage(tempImg,(x * blockSize + (x+1) * blockPadding),(y * blockSize + (y+1) * blockPadding),blockSize,blockSize, blocks[c][r].x, blocks[c][r].y, blockSize, blockSize);
                         // 数字描写
                         ctx.font = "italic 20px Arial";
                         ctx.fillStyle = numberColor;
@@ -128,9 +137,9 @@
         function findBlankBlock() {
             for (var c = 0; c < size; c++) {
                 for (var r = 0; r < size; r++) {
-                if (blocks[c][r].num == 0){
-                    return blocks[c][r]; // 空きブロックの特定
-                }
+                    if (blocks[c][r].num == 0){
+                        return blocks[c][r]; // 空きブロックの特定
+                    }
                 }
             }
         }
@@ -151,6 +160,13 @@
             ctx.fillStyle = blockColor;
             ctx.fill();
 
+            y = Math.round((block1.num-1) / (size));
+            x = (block1.num-1) % (size);
+            if((block1.num-1)%size == (size-1)){
+                y -= 1;
+            }
+            console.log(x,y);
+            ctx.drawImage(tempImg,(x * blockSize + (x+1) * blockPadding),(y * blockSize + (y+1) * blockPadding),blockSize,blockSize, x2, y2, blockSize, blockSize);
             ctx.font = "italic 20px Arial";
             ctx.fillStyle = numberColor;
             ctx.textAlign = "center";
@@ -376,9 +392,11 @@
             drawBlock();
             clearCondition();
         }
-
-        make()
-        draw()
+        init()
+        tempImg.addEventListener("load",function(){
+            make()
+            draw()
+        });
         </script>
   </body>
 </html>
