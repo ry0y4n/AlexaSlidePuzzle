@@ -7,10 +7,26 @@
       * { padding: 0; margin: 20px; }
       canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
+    <%= stylesheet_link_tag "puzzle", :media => "all" %>
   </head>
   <body>
+<<<<<<< Updated upstream
     <!-- <h1>リロードした1秒後に「<%= @operation %>」へ移動する</h1> -->
-    <h1>矢印キーを押してみて</h1>
+    <!-- <h1>矢印キーを押してみて</h1> -->
+=======
+    <div class="container">
+        <div class="glitch" data-text="Slidepuzzle">Slidepuzzle</div>
+        <div class="glow">Slidepuzzle</div>
+        <!-- <p class="subtitle">Engineer﹒Gamer﹒Shenaniganizer</p> -->
+        <div class="scanlines"></div>
+    </div>
+    <div class="rule">
+        <h2>遊び方</h2>
+        <li>「アレクサ，パズルを開いて（上/下/左/右のいずれか）<br>に移動して」と話しかけてください</li>
+        <li>指定した方向に空白が移動します</li>
+        <li>バラバラになった画像を元通りに<br>並び替えることができればゲームクリアです！</li>
+    </div> -->
+>>>>>>> Stashed changes
     <canvas id="myCanvas" width="330" height="330"></canvas>
     <script>
         var canvas = document.getElementById("myCanvas");
