@@ -26,11 +26,28 @@
         var numberClearColor = "#ff0000";
         var opeNum = <%= @opeNum %>
 
-        document.addEventListener("click", clickHandler, false)
+        document.addEventListener("click", clickHandler, false);
 
+        document.onkeydown = function(e) {
+            let keyCode;
+        
+            if (e) event = e;
+        
+            if (event) {
+                if (event.keyCode) {
+                    keyCode = event.keyCode;
+                } else if (event.which) {
+                    keyCode = event.which;
+                }
+            }
+            keyboardHandler(keyCode);
+        };
+
+        /*
         window.onload = function() {
             setTimeout(function(){alexaHandler()}, 1000);
         }
+        */
 
         function makeNumber() {
             for (i = 0; i < size**2; i++) {
@@ -172,6 +189,37 @@
                 for (var r = 0; r < size; r++) {
                     if (blocks[c][r].num != 0) {
                         var condition = moveCondition(blankBlock, blocks[c][r], opeNum); 
+            
+                        if (condition) {
+                            // alert(c + ',' + r + ': blankBlock(' + blankBlock.x + ',' + blankBlock.y + '), blocks[c][r](' + blocks[c][r].x + ',' + blocks[c][r].y + ')');
+                            moveBlock(blocks[c][r], blankBlock);
+                        }
+                    }
+                }
+            }
+            clearCondition();
+        }
+
+        function keyboardHandler(kcode) {
+            var blankBlock = findBlankBlock();
+            switch(kcode) {
+                case 38:
+                    var keyOpe = 0;
+                    break;
+                case 40:
+                    var keyOpe = 1;
+                    break;
+                case 37:
+                    var keyOpe = 2;
+                    break;
+                case 39:
+                    var keyOpe = 3;
+                    break;
+            }
+            for (var c = 0; c < size; c++) {
+                for (var r = 0; r < size; r++) {
+                    if (blocks[c][r].num != 0) {
+                        var condition = moveCondition(blankBlock, blocks[c][r], keyOpe); 
             
                         if (condition) {
                             // alert(c + ',' + r + ': blankBlock(' + blankBlock.x + ',' + blankBlock.y + '), blocks[c][r](' + blocks[c][r].x + ',' + blocks[c][r].y + ')');
