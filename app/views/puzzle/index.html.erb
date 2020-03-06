@@ -9,13 +9,14 @@
     </style>
   </head>
   <body>
-    <h1>リロードした1秒後に「<%= @operation %>」へ移動する</h1>
+    <!-- <h1>リロードした1秒後に「<%= @operation %>」へ移動する</h1> -->
+    <h1>矢印キーを押してみて</h1>
     <canvas id="myCanvas" width="330" height="330"></canvas>
     <script>
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
 
-        var size = 6;
+        var size = 3;
         var blocks = [];
         var blockPadding = 1;
         var blockSize = (canvas.width - (size + 1) * blockPadding) / size;
@@ -189,6 +190,23 @@
                 for (var r = 0; r < size; r++) {
                     if (blocks[c][r].num != 0) {
                         var condition = moveCondition(blankBlock, blocks[c][r], opeNum); 
+            
+                        if (condition) {
+                            // alert(c + ',' + r + ': blankBlock(' + blankBlock.x + ',' + blankBlock.y + '), blocks[c][r](' + blocks[c][r].x + ',' + blocks[c][r].y + ')');
+                            moveBlock(blocks[c][r], blankBlock);
+                        }
+                    }
+                }
+            }
+            clearCondition();
+        }
+
+        function asyncAlexaHandler (ope) {
+            var blankBlock = findBlankBlock();
+            for (var c = 0; c < size; c++) {
+                for (var r = 0; r < size; r++) {
+                    if (blocks[c][r].num != 0) {
+                        var condition = moveCondition(blankBlock, blocks[c][r], ope); 
             
                         if (condition) {
                             // alert(c + ',' + r + ': blankBlock(' + blankBlock.x + ',' + blankBlock.y + '), blocks[c][r](' + blocks[c][r].x + ',' + blocks[c][r].y + ')');
